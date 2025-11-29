@@ -8,17 +8,17 @@ on:
 jobs:
   setup-and-build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ['20.x', '22.x', '24.x']
+    # strategy:
+    #   matrix:
+    #     node-version: ['20.x', '22.x', '24.x']  !!!pnpm issue
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node ${{matrix.node-version}}
+      - name: Setup Node 
         uses: actions/setup-node@v4
         with:
-          node-version: ${{matrix.node-version}}
+          node-version: 22
           cache: "pnpm"
 
       - name: Setup pnpm
