@@ -1,6 +1,37 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import './home.css'
+
+interface TypingTextProps {
+  text: string;
+  speed?: number;
+}
+
+interface LoadingScreenProps {
+  loadingDelay?: number;
+}
+
+export default function TypingText({ text, speed = 100 }: TypingTextProps) {
+  const [displayedText, setDisplayedText] = useState("");
+
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setDisplayedText(text.slice(0, index));
+      index++;
+      if (index > text.length) clearInterval(interval);
+    }, speed);
+
+    return () => clearInterval(interval);
+  }, [text, speed]);
+
+  return (
+    <h1 className="text-black font-bold font-whirlyBirdie text-9xl">
+      {displayedText}
+    </h1>
+  );
+}
+
 
 const RotatingCanvasText = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -48,11 +79,32 @@ const RotatingCanvasText = () => {
   );
 };
 
+export const LoadingScreen: React.FC<LoadingScreenProps> = ({ loadingDelay = 2000 }) => {
+  const MAX_TYPING_TIME = 800;
+  const typingDuration = Math.min(MAX_TYPING_TIME, loadingDelay);
 
-export const LoadingScreen: React.FC = () => {
-  return(
-    <section id="loading-screen" className="flex bg-[var(--background)] flex-1 min-h-screen min-w-max z-50 justify-center items-center">
-      <RotatingCanvasText/>
+  const rotatingDuration = loadingDelay - typingDuration;
+
+  const [showTyping, setShowTyping] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTyping(true);
+    }, rotatingDuration);
+
+    return () => clearTimeout(timer);
+  }, [rotatingDuration]);
+
+  return (
+    <section
+      id="loading-screen"
+      className="flex bg-[var(--background)] flex-1 min-h-screen min-w-max z-50 justify-center items-center"
+    >
+      {showTyping ? (
+        <TypingText text="ENIGMA" speed={typingDuration / 6} />
+      ) : (
+        <RotatingCanvasText />
+      )}
     </section>
-  )
-}
+  );
+};

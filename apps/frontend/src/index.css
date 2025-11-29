@@ -16,3 +16,19 @@
     --foreground: 0 0% 10%;
   }
 }
+
+@font-face {
+  font-family: "WhirlyBirdie";
+  src: url("/fonts/WhirlyBirdie-WideLight.otf") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WhirlyBirdie";
+  src: url("/fonts/WhirlyBirdie-WideBold.otf") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

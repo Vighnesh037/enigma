@@ -12,7 +12,7 @@ function App() {
 
   return (
     <>
-      {isLoading ? <LoadingScreen /> : <AppRouter />}
+      {isLoading ? <LoadingScreen loadingDelay={2000} /> : <AppRouter />}
     </>
   );
 }
