@@ -1,12 +1,8 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { cn } from "../lib/utils";
 
-import ThreeParticles from "./ThreeParticles"; // stars only on home
-import bg from "@/assets/background.png";
-
+import bg from "@/assets/image.png";
 import { Navbar } from "./Navbar";
-//import Footer from "./ui/footer";
-
 
 interface LandingLayoutProps {
   children?: React.ReactNode;
@@ -15,45 +11,34 @@ interface LandingLayoutProps {
 
 const LandingLayout = ({ children, isSignInPage = false }: LandingLayoutProps) => {
   const location = useLocation();
-
   const isHome = location.pathname === "/";
 
   return (
-    <div
-      className={cn("min-h-dvh w-full relative overflow-hidden", !isSignInPage && "bg-black")}
-    >
-      {/* Background shown on ALL pages */}
+    <div className="min-h-dvh w-full relative overflow-hidden">
+
+     \
       <div
-        className="fixed inset-0 w-full h-screen bg-center bg-no-repeat z-0"
+        className="fixed inset-0 w-full h-screen z-0
+                   bg-no-repeat bg-cover bg-center"
         style={{
           backgroundImage: `url(${bg})`,
-          backgroundPosition: "center bottom",
-          opacity: 0.55,
+          opacity: 1
         }}
       />
 
-      {/* Soft top/bottom fades so content reads clearly on every page */}
-      <div className="pointer-events-none fixed inset-x-0 top-0 h-32 bg-gradient-to-b from-black/70 to-transparent z-10" />
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/70 to-transparent z-10" />
-
-      {/* Stars ONLY on home page */}
-      <ThreeParticles />
-
-    {/* NAVBAR */}
+      {/* NAVBAR */}
       <Navbar isSignInPage={isSignInPage} />
 
       {/* PAGE CONTENT */}
       <main
         className={cn(
-          // Pull content a bit higher so home hero sits “more up”
-          "relative z-20 min-h-screen flex flex-col",
-          isSignInPage && "bg-gradient-to-br from-gray-900/60 to-black/60"
+          "relative z-20 min-h-screen flex flex-col"
         )}
       >
         {children || <Outlet />}
       </main>
 
-      {!isHome}
+      {!isHome && null}
     </div>
   );
 };
