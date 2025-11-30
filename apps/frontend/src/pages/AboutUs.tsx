@@ -1,5 +1,6 @@
+import { useState } from "react";
 import EnigmaLogo from "@/assets/circular logo.webp";
-import Enigma3D from "@/assets/enigma-anim.webm";
+import Enigma3D from "@/assets/enig-anim-org.webm";
 
 /*
  * CircularText
@@ -360,22 +361,65 @@ const AboutUs = () => {
         </p>
 
         {/* === 3D ANIMATED ICON (right side) === */}
-        <video
-          src={Enigma3D}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="
-            absolute
-            w-[645px]
-            h-[482px]
-            top-0
-            left-[799px]
-            object-contain
-            mix-blend-screen
-          "
-        />
+{/* === 3D ANIMATED ICON (right side) with fallback image === */}
+<div
+  className="
+    absolute
+    w-[650px]
+    h-[486px]
+    top-[0px]
+    left-[796px]
+    overflow-hidden
+    mix-blend-screen
+  "
+>
+  {/* Static fallback image */}
+  <img
+    src="/src/assets/enigma-static.webp"
+    alt="Enigma static"
+    className="
+      w-full
+      h-full
+      object-cover
+      absolute
+      top-0
+      left-0
+    "
+  />
+
+  {/* Animated 3D Video */}
+  <video
+  src={Enigma3D}
+  autoPlay
+  loop
+  muted
+  playsInline
+  className="
+    w-full
+    h-full
+    object-cover
+    absolute
+    inset-0
+    opacity-0
+    transition-opacity duration-500
+    z-10
+  "
+  onLoadedData={(e) => (e.currentTarget.style.opacity = "1")}
+  onError={(e) => (e.currentTarget.style.display = "none")}
+
+
+  onMouseEnter={(e) => {
+    e.currentTarget.playbackRate = 5;     // speed up on hover
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.playbackRate = 1;     // return to normal
+  }}
+/>
+
+</div>
+
+
+
       </section>
 
       {/* Rectangle 2 – reserved for later */}
