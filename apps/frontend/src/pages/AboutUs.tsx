@@ -1,4 +1,3 @@
-import { useState } from "react";
 import EnigmaLogo from "@/assets/circular logo.webp";
 import Enigma3D from "@/assets/enig-anim-org.webm";
 
@@ -101,7 +100,7 @@ const AboutUs = () => {
   return (
     <div className="relative w-full min-h-[2000px] bg-gray-900 overflow-hidden">
       {/* ========== DESKTOP LAYOUT - EXACT ORIGINAL (hidden on mobile) ========== */}
-      <div className="hidden lg:block">
+      <div className="hidden xl:block">
         {/* ========== RECTANGLE 1 ========== */}
         <section
           className="
@@ -226,7 +225,7 @@ const AboutUs = () => {
           <div
             className="absolute border-l border-white"
             style={{
-              left: "799px",
+              left: "795.5px",
               top: "0px",
               height: "482px",
             }}
@@ -431,7 +430,7 @@ const AboutUs = () => {
       </div>
 
       {/* ========== MOBILE/TABLET RESPONSIVE LAYOUT (shown on smaller screens) ========== */}
-      <div className="block lg:hidden px-4 py-8 md:px-8 md:py-12">
+      <div className="block xl:hidden px-4 py-8 md:px-8 md:py-12">
         <section className="max-w-4xl mx-auto space-y-8">
           {/* Circular Logo */}
           <div className="relative w-[180px] h-[180px] md:w-[214px] md:h-[214px] mx-auto">
