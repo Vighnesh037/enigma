@@ -1,127 +1,162 @@
+
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { cn } from "../lib/utils";
 import { useAuth } from "../contexts/AuthContext";
 import Footer from "./ui/footer";
 
+const steps = [
+  { id: 1, number: "01", title: "REGISTER", description: "Create an account or sign in with Google" },
+  { id: 2, number: "02", title: "DAILY QUESTION", description: "Answer today's challenge as quickly as possible" },
+  { id: 3, number: "03", title: "COMPETE", description: "See your ranking on the daily leaderboard" },
+  { id: 4, number: "04", title: "REPEAT", description: "Come back tomorrow for the next challenge!" }
+];
+
+const tilesContainerVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.18, when: "beforeChildren" } }
+};
+
+const tileVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: "easeOut" } }
+};
+
+const HowItWorksSection = () => {
+  return (
+    <section id="how-it-works-section" className="pt-24 pb-32 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        <h2
+          style={{ fontFamily: "WhirlyBirdie" }}
+          className="text-4xl md:text-5xl font-bold text-black text-center mb-6"
+        >
+          HOW IT WORKS
+        </h2>
+
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <p className="text-2xl md:text-3xl font-bold text-black/90">Join our 10-day treasure hunt!!</p>
+          <p className="text-md md:text-lg font-bold text-black/70 mt-4">
+            One question per day, compete for the fastest completion time, and climb the daily leaderboard
+          </p>
+        </div>
+
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
+          variants={tilesContainerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {steps.map((step) => (
+            <motion.div
+              key={step.id}
+              variants={tileVariants}
+              className="group relative bg-black border-[3px] border-white text-white overflow-hidden cursor-pointer flex items-center justify-center"
+              style={{ minHeight: 260 }}
+              tabIndex={0}
+            >
+              <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-6 w-full h-full">
+                <div
+                  style={{ fontFamily: "WhirlyBirdie" }}
+                  className="text-[1.9rem] md:text-[2.2rem] font-bold mb-2"
+                >
+                  {step.number}
+                </div>
+
+                <div
+                  style={{ fontFamily: "WhirlyBirdie" }}
+                  className="text-base md:text-lg font-bold mb-3"
+                >
+                  {step.title}
+                </div>
+
+                <p
+                  className={
+                    "text-sm md:text-base text-white/90 max-w-[160px] mx-auto transition-all duration-700 transform opacity-0 translate-y-4 " +
+                    "group-hover:opacity-100 group-hover:translate-y-0 group-focus:opacity-100 group-focus:translate-y-0 text-center"
+                  }
+                >
+                  {step.description}
+                </p>
+              </div>
+
+              <div aria-hidden className="pointer-events-none absolute inset-0 border-[3px] border-white" />
+            </motion.div>
+          ))}
+        </motion.div>
+
+      </div>
+    </section>
+  );
+};
+
 const HeroSection = () => {
   const { currentUser } = useAuth();
 
-  // Animation variants for staggering
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.25,
-      },
-    },
-  };
+  const containerVariants = { hidden: {}, visible: { transition: { staggerChildren: 0.25 } } };
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8} },
-  };
+  const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.9 } } };
 
-  const fadeIn = {
-    hidden: { opacity: 0},
-    visible: { opacity: 1, transition: { duration: 1.2 } },
+  const fadeIn = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.9 } } };
+
+  const scrollToHow = () => {
+    const el = document.getElementById("how-it-works-section");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <motion.div
-      className="flex min-h-screen flex flex-col justify-between"
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-    >
-      <div className="flex px-4 sm:px-6 lg:px-8 pt-20 items-start justify-center select-none">
-        <div className="max-w-5xl mx-auto md:pt-0 pt-[120px] text-center">
+    <motion.div className="flex flex-col" initial="hidden" animate="visible" variants={containerVariants}>
+      <section className="flex min-h-screen flex-col justify-center">
+        <div className="flex px-4 sm:px-6 lg:px-8 pt-[140px] items-start justify-center select-none">
+          <div className="max-w-5xl mx-auto text-center w-full">
 
-          {/* Title */}
-          <motion.h1
-            variants={fadeIn}
-            className={cn(
-              "md:text-8xl text-5xl font-black",
-              "text-white font-pavelt leading-[0.9] mb-4 relative tracking-[0.20em]",
-              "[text-shadow:_0_0_4px_#333395,0_0_6px_#333395,0_0_8px_#333395,0_0_12px_#333395]",
-              "drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]",
-              "lg:pt-24"
-            )}
-          >
-            ENIGMA
-          </motion.h1>
+            <motion.h1
+              variants={fadeIn}
+              style={{ fontFamily: "WhirlyBirdie" }}
+              className={cn(
+                "md:text-[9rem] sm:text-[7.5rem] text-[6rem] font-bold",
+                "text-black tracking-[0.08em] leading-[0.85] mb-4"
+              )}
+            >
+              ENIGMA
+            </motion.h1>
 
-          {/* Subtitle */}
-          <motion.p
-            variants={fadeIn}
-            className="text-3xl sm:text-4xl text-white mb-12 max-w-2xl mx-auto font-semibold tracking-wider font-orbitron"
-          >
-            Online Treasure Hunt
-          </motion.p>
+            <motion.p
+              variants={fadeIn}
+              className="text-2xl sm:text-3xl md:text-4xl text-black mb-10 max-w-2xl mx-auto font-normal font-orbitron"
+            >
+              Online Treasure Hunt
+            </motion.p>
 
-          {/* Buttons with stagger */}
-          <motion.div
-            className="mt-40 flex flex-wrap items-center justify-center gap-9"
-            variants={containerVariants}
-          >
-            {(currentUser ? (
-              <>
-                <motion.div variants={fadeUp}>
-                  <Link
-                    to="/play"
-                    className="px-10 py-4 rounded-full text-lg font-semibold
-                    backdrop-blur-md bg-white/12 border border-purple-300/40 text-white
-                    hover:bg-purple-500/25 hover:shadow-[0_0_30px_rgba(150,100,255,0.55)]
-                    transition-all duration-300 hover:-translate-y-1"
-                  >
-                    Start Today's Challenge
-                  </Link>
-                </motion.div>
+            <motion.div className="mt-28 flex flex-col items-center gap-6" variants={containerVariants}>
+              <motion.div variants={fadeUp}>
+                <Link
+                  to={currentUser ? "/play" : "/signin"}
+                  className="px-12 py-4 rounded-full text-lg font-medium border border-black text-black bg-transparent hover:bg-black hover:text-white transition-all duration-200"
+                >
+                  Get Started
+                </Link>
+              </motion.div>
 
-                <motion.div variants={fadeUp}>
-                  <Link
-                    to="/leaderboard"
-                    className="px-10 py-4 rounded-full text-lg font-medium
-                    backdrop-blur-md bg-white/6 border border-white/30 text-white/90
-                    hover:bg-white/15 hover:text-white hover:shadow-[0_0_25px_rgba(255,255,255,0.45)]
-                    transition-all duration-300 hover:-translate-y-1"
-                  >
-                    View Leaderboard
-                  </Link>
-                </motion.div>
-              </>
-            ) : (
-              <>
-                <motion.div variants={fadeUp}>
-                  <Link
-                    to="/signin"
-                    className="px-10 py-4 rounded-full text-lg font-semibold
-                    backdrop-blur-md bg-white/12 border border-purple-300/40 text-white
-                    hover:bg-purple-500/25 hover:shadow-[0_0_30px_rgba(150,100,255,0.55)]
-                    transition-all duration-300 hover:-translate-y-1"
-                  >
-                    Sign In to Play
-                  </Link>
-                </motion.div>
+              <motion.button
+                onClick={scrollToHow}
+                variants={fadeUp}
+                aria-label="Scroll"
+                className="flex items-center justify-center w-12 h-12 rounded-full"
+                animate={{ y: [0, 8, 0] }}
+                transition={{ repeat: Infinity, duration: 1.1, ease: "easeInOut" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </motion.button>
+            </motion.div>
 
-                <motion.div variants={fadeUp}>
-                  <Link
-                    to="/how-it-works"
-                    className="px-10 py-4 rounded-full text-lg font-medium
-                    backdrop-blur-md bg-white/6 border border-white/30 text-white/90
-                    hover:bg-white/15 hover:text-white hover:shadow-[0_0_25px_rgba(255,255,255,0.45)]
-                    transition-all duration-300 hover:-translate-y-1"
-                  >
-                    Learn More
-                  </Link>
-                </motion.div>
-              </>
-            ))}
-          </motion.div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <Footer/>
+      <HowItWorksSection />
+      <Footer />
     </motion.div>
   );
 };
